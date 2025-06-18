@@ -1,15 +1,16 @@
-def calculate(a,o,b):
+def calculate(a,o,b) -> int | float | list[float]:
     """ Return the calculated value of ``a`` ``operator`` ``b`` """
     if o == "+": return a + b
     elif o == '-': return a - b
     elif o == '*': return a * b
-    elif o == '/' and a and b: return a / b
-    elif o == '~' and a and b: return a % b
+    elif o == '/' and a and b: return a / b # if a and b: is basically a no 0 check! 0 is FALSE
+    elif o == '~' and a and b: return a % b , a / b
     
 def isoperator(operator):
+    """ Checks if a given string is a recognized operator. """
     return operator in ['+','-','*','/','~']
 
-def get_decimal_input(text:str):
+def get_decimal_input(text:str) -> int:
     """ Runs until user input is an integer """
     var = ''
     while not var.isdecimal():
@@ -35,7 +36,10 @@ def main():
     for i in range(get_decimal_input('Ammount: ')):
         a,o,b = get_aob_input("What do you want to calculate?: ")
         result = calculate(a,o,b)
-        print(f"{a} {o} {b} = {result}")
-
+        if o == '~': #only in this case a list of 2 numbers are returned.
+            print(f"The remainder is {result[0]}\n The answer is {result[1]}")
+        else:
+            print(f"The answer is {result}")
+            
 if __name__ == '__main__':
     main()
