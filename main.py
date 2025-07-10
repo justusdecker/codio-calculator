@@ -1,13 +1,20 @@
 def calculate(a,o,b) -> int | float | list[float]:
     """ Return the calculated value of ``a`` ``operator`` ``b`` """
-    if o == "+": return a + b
-    elif o == '-': return a - b
-    elif o == '*': return a * b
-    elif o == '/' and a and b: return a / b
-    elif o == '~' and a and b: return a % b , a / b
-    elif o == '/' and not a and b: return 0 # In case of 5 / 0
-    elif o == '~' and not a and b: return 0, 0 # In case of 5 ~ 0
-    
+    if o in ('/', '~') and b == 0:
+        return None
+    # Perform operations
+    if o == "+":
+        return a + b
+    elif o == '-':
+        return a - b
+    elif o == '*':
+        return a * b
+    elif o == '/':
+        return a / b
+    elif o == '~':
+        # Ensure integer division and modulo result in integers
+        return int(a // b), int(a % b)
+
 def isoperator(operator):
     """ Checks if a given string is a recognized operator. """
     return operator in ['+','-','*','/','~']
@@ -42,7 +49,7 @@ def main():
             print('Division by zero')
             continue
         if o == '~': #only in this case a list of 2 numbers are returned.
-            print(f"The answer is {result[1]}\nThe remainder is {result[0]}")
+            print(f"The answer is {result[0]}\nThe remainder is {result[1]}")
         else:
             print(f"The answer is {result}")
             
